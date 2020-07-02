@@ -1,1 +1,1 @@
-export {default as ForceWorker} from './src/Force';
+export {default as forceworker} from './src/Force';
