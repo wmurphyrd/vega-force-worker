@@ -1,0 +1,37 @@
+{
+  "name": "vega-force-worker",
+  "version": "1.0.0",
+  "description": "Force simulation transform for Vega dataflows using Web Workers.",
+  "keywords": [
+    "vega",
+    "force"
+  ],
+  "license": "BSD-3-Clause",
+  "author": "William Murphy",
+  "main": "build/vega-force-worker.js",
+  "module": "index",
+  "repository": "https://gitlab.com/WillMLumere/vega-force-worker",
+  "scripts": {
+    "rollup": "rollup -g d3-force:d3,vega-dataflow:vega,vega-util:vega -f umd -n vega.transforms -o build/vega-force-worker.js -- index.js",
+    "rollup:worker": "rollup -p @rollup/plugin-node-resolve -f umd -n vega.transforms -o build/vega-force-worker-thread.js -- index-worker.js",
+    "prebuild": "rimraf build && mkdir build",
+    "build": "yarn rollup && yarn rollup:worker",
+    "postbuild": "terser build/vega-force-worker.js -c -m -o build/vega-force-worker.min.js && terser build/vega-force-worker-thread.js -c -m -o build/vega-force-worker-thread.min.js",
+    "pretest": "yarn prebuild && yarn rollup",
+    "test": "tape 'test/**/*-test.js' && eslint index.js src test",
+    "prepublishOnly": "yarn test && yarn build",
+    "postpublish": "git push && git push --tags"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.10.4",
+    "d3-force": "^2.0.1",
+    "vega-dataflow": "^5.4.0",
+    "vega-util": "^1.11.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^8.1.0",
+    "rollup": "^2.18.2",
+    "terser": "^4.8.0",
+    "vega-transforms": "*"
+  }
+}
