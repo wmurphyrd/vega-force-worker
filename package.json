@@ -31,7 +31,7 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^8.1.0",
     "rollup": "^2.18.2",
-    "terser": "^4.8.0",
+    "terser": "^4.8.1",
     "vega-transforms": "*"
   }
 }
